@@ -54,3 +54,5 @@ C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\Moq.dll
 C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\Castle.Core.xml
 C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\Moq.xml
 C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\log4net.dll
+C:\Users\Tghrayt\source\repos\Catalogue_Produit_Test_Unitaires\bin\Debug\log4net.xml
