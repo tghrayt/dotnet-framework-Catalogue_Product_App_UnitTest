@@ -28,7 +28,7 @@ namespace Catalogue_Produit_Test_Unitaires
             _controller = new CatalogueController(_categorieService.Object);
         }
         [TestMethod]
-        public void TestGetAllCatalogueCatalogueMethod()
+        public void TestGetAllCatalogueMethod()
         {
             //Arrange
 
@@ -44,7 +44,7 @@ namespace Catalogue_Produit_Test_Unitaires
 
 
         [TestMethod]
-        public void TestAjouterCatalogueCatalogueMethod()
+        public void TestAjouterCatalogueMethod()
         {
             //Arrange
             CAT_CATEGORIE categorieTransfert = null;
@@ -69,6 +69,28 @@ namespace Catalogue_Produit_Test_Unitaires
             Assert.AreEqual(categorie.libelleCategorie, categorieDto.libelleCategorie);
             Assert.AreEqual(categorie.codeCategorie, categorieDto.codeCategorie);
             //Assert.AreEqual(categorie.dateSaisie, categorieDto.dateSaisie);
+        }
+
+
+
+
+        [TestMethod]
+        public void TestSupprimerCatalogueMethod()
+        {
+            //Arrange
+            int codeCategorie = 2;
+            _categorieService.Setup(r => r.DeleteCategorie(It.IsAny<int>()))
+                .Callback<int>(x => codeCategorie = x);
+
+            //Act
+            var code =2;
+            _controller.SupprimerCatalogue(code);
+            _categorieService.Verify(x => x.DeleteCategorie(It.IsAny<int>()), Times.Never);
+
+
+
+            //Assert
+            Assert.AreEqual(code, codeCategorie);
         }
     }
 }
