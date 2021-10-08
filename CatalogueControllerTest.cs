@@ -92,5 +92,35 @@ namespace Catalogue_Produit_Test_Unitaires
             //Assert
             Assert.AreEqual(code, codeCategorie);
         }
+
+
+        [TestMethod]
+        public void TestModifierCatalogueMethod()
+        {
+            //Arrange
+            CAT_CATEGORIE categorieTransfert = null;
+            CategorieDto categorie = null;
+            _categorieService.Setup(r => r.UpdateCategorie(It.IsAny<CategorieDto>()))
+                .Callback<CategorieDto>(x => categorie = x);
+
+            //Act
+            var categorieDto = new CategorieDto
+            {
+                libelleCategorie = "Test categorie",
+                codeCategorie = 0,
+                dateSaisie = DateTime.Now
+            };
+            categorieTransfert = _categorieHelper.ConvertFromDto(categorieDto);
+            _controller.ModifierCatalogue(categorieTransfert);
+            _categorieService.Verify(x => x.UpdateCategorie(It.IsAny<CategorieDto>()), Times.Once);
+
+
+
+            //Assert
+            Assert.AreEqual(categorie.libelleCategorie, categorieDto.libelleCategorie);
+            Assert.AreEqual(categorie.codeCategorie, categorieDto.codeCategorie);
+            //Assert.AreEqual(categorie.dateSaisie, categorieDto.dateSaisie);
+        }
+
     }
 }
