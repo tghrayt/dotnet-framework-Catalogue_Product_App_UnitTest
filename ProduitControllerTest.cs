@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Catalogue_Produit_Test_Unitaires
 {
@@ -18,12 +19,14 @@ namespace Catalogue_Produit_Test_Unitaires
     {
 
         private readonly Mock<IProduitService> _produitService;
+        private readonly Mock<ICategorieService> _categorieService;
         private readonly ProduitHelper _produitHelper = new ProduitHelper();
         private readonly ProduitController _controller;
         public ProduitControllerTest()
         {
             _produitService = new Mock<IProduitService>();
-            _controller = new ProduitController(_produitService.Object);
+            _categorieService = new Mock<ICategorieService>();
+            _controller = new ProduitController(_produitService.Object,_categorieService.Object);
         }
 
 
@@ -69,7 +72,23 @@ namespace Catalogue_Produit_Test_Unitaires
             //Assert
             Assert.AreEqual(produit.libelleProduit, produitDto.libelleProduit);
             Assert.AreEqual(produit.codeProduit, produitDto.codeProduit);
-            //Assert.AreEqual(categorie.dateSaisie, categorieDto.dateSaisie);
         }
+
+
+
+        [TestMethod]
+        public void TestGetAllProduiteMethod()
+        {
+            //Arrange
+
+
+            //Act
+            ViewResult result = _controller.AjoutProduit() as ViewResult;
+            string viewName = result.ViewName;
+
+            //Assert
+            Assert.AreEqual(viewName, "");
+        }
+
     }
 }
