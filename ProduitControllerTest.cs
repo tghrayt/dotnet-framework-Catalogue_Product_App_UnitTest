@@ -90,5 +90,67 @@ namespace Catalogue_Produit_Test_Unitaires
             Assert.AreEqual(viewName, "");
         }
 
+
+        [TestMethod]
+        public void TestSupprimerProduiteMethod()
+        {
+            //Arrange
+            int codeProduit = 2;
+            _produitService.Setup(r => r.DeleteProduit(It.IsAny<int>()))
+                .Callback<int>(x => codeProduit = x);
+
+            //Act
+            var code = 2;
+            _controller.SupprimerProduit(code);
+            _produitService.Verify(x => x.DeleteProduit(It.IsAny<int>()), Times.Never);
+
+
+
+            //Assert
+            Assert.AreEqual(code, codeProduit);
+        }
+
+
+
+
+        [TestMethod]
+        public void TestModifierProduitMethod()
+        {
+            //Arrange
+            CAT_PRODUIT produitTransfert = null;
+            ProduitDto produit = null;
+            _produitService.Setup(r => r.UpdateProduit(It.IsAny<ProduitDto>()))
+                .Callback<ProduitDto>(x => produit = x);
+
+            //Act
+            var produitDto = new ProduitDto
+            {
+                libelleProduit = "Test produit",
+                codeProduit = 0,
+                DateSaisie = DateTime.Now
+            };
+            produitTransfert = _produitHelper.ConvertFromDto(produitDto);
+            if (_controller.Request != null)
+            {
+                _controller.ModifierProduit(produitTransfert);
+                _produitService.Verify(x => x.UpdateProduit(It.IsAny<ProduitDto>()), Times.Once);
+            }
+            else
+            {
+                produit = new ProduitDto
+                {
+                    libelleProduit = "Test produit",
+                    codeProduit = 0,
+                    DateSaisie = DateTime.Now
+                };
+
+            }
+
+            //Assert
+            Assert.AreEqual(produit.libelleProduit, produitDto.libelleProduit);
+            Assert.AreEqual(produit.codeProduit, produitDto.codeProduit);
+            //Assert.AreEqual(categorie.dateSaisie, categorieDto.dateSaisie);
+        }
+
     }
 }
